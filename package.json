@@ -1,0 +1,85 @@
+{
+  "name": "@quxtech/pqc-crypto",
+  "version": "2.0.0",
+  "description": "Post-Quantum Cryptography library implementing CRYSTALS-Kyber (ML-KEM) and CRYSTALS-Dilithium (ML-DSA) with opt-in FIPS-mode self-tests",
+  "type": "module",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js"
+    },
+    "./kem": {
+      "import": "./src/core/kem.js"
+    },
+    "./dsa": {
+      "import": "./src/core/dsa.js"
+    },
+    "./symmetric": {
+      "import": "./src/core/symmetric.js"
+    },
+    "./keys": {
+      "import": "./src/core/keys.js"
+    },
+    "./session": {
+      "import": "./src/core/session.js"
+    },
+    "./hash": {
+      "import": "./src/utils/hash.js"
+    },
+    "./voip": {
+      "import": "./src/core/voip.js"
+    },
+    "./fips": {
+      "import": "./src/core/fips.js"
+    },
+    "./selftest": {
+      "import": "./src/core/selftest.js"
+    },
+    "./zeroize": {
+      "import": "./src/utils/zeroize.js"
+    }
+  },
+  "files": [
+    "src",
+    "README.md",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/",
+    "selftest": "node -e \"import('./src/index.js').then(m => { m.runSelfTests(); console.log('self-tests passed'); })\""
+  },
+  "keywords": [
+    "post-quantum",
+    "cryptography",
+    "pqc",
+    "crystals",
+    "kyber",
+    "dilithium",
+    "ml-kem",
+    "ml-dsa",
+    "nist",
+    "fips-203",
+    "fips-204",
+    "quantum-safe"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@10.10.0.10:quxadmin/pqc-crypto.git"
+  },
+  "bugs": {
+    "url": "https://10.10.0.10/quxadmin/pqc-crypto/issues"
+  },
+  "homepage": "https://10.10.0.10/quxadmin/pqc-crypto",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@noble/ciphers": "^1.2.1",
+    "@noble/hashes": "^1.7.1",
+    "@noble/post-quantum": "^0.2.1"
+  }
+}
