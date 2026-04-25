@@ -1,0 +1,158 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:d6258e32-6791-4472-93ca-fdd4b21429b2",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-04-25T00:04:48.615Z",
+    "tools": [
+      {
+        "vendor": "QUX Technologies",
+        "name": "@quxtech/pqc-crypto SBOM generator",
+        "version": "hand-built"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "bom-ref": "pkg:npm/quxtech/pqc-crypto@2.0.0",
+      "name": "@quxtech/pqc-crypto",
+      "version": "2.0.0",
+      "description": "Post-Quantum Cryptography library implementing CRYSTALS-Kyber (ML-KEM) and CRYSTALS-Dilithium (ML-DSA) with hybrid KEM, pluggable PqcProvider, opt-in FIPS-mode self-tests, NIST KAT vectors, and signed SBOM",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40quxtech%2Fpqc-crypto@2.0.0"
+    },
+    "properties": [
+      {
+        "name": "validation:fips-140-3",
+        "value": "not-validated"
+      },
+      {
+        "name": "validation:fips-mode-flag",
+        "value": "opt-in"
+      },
+      {
+        "name": "build:reproducible",
+        "value": "see-BUILD.md"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/noble/ciphers@1.2.1",
+      "name": "@noble/ciphers",
+      "version": "1.2.1",
+      "purl": "pkg:npm/%40noble%2Fciphers@1.2.1",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ace34f58c0bb3de131134efbb8b138a2a5ab67522f01fcf7a07f4b89b5407150a8a49880f51eb6b9abe76c4cdd915989608e8ce998246de6f4efeb568e5ab65c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/noble/curves@1.8.1",
+      "name": "@noble/curves",
+      "version": "1.8.1",
+      "purl": "pkg:npm/%40noble%2Fcurves@1.8.1",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "c1aaf0b29a3e51850f7a9d10fafb5d541e14827f061908fc8b2077827456b33b665074c8dd2d6785d89636c3d418bd2fb9dec9951464d5712eecbab52864e731"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/noble/hashes@1.7.1",
+      "name": "@noble/hashes",
+      "version": "1.7.1",
+      "purl": "pkg:npm/%40noble%2Fhashes@1.7.1",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "07c5c13ec9f8bd3fca2401aa0f36f0ced77ee98b5edcfe15ee269f9b6e1bc600defe6951b8aeb19963ee08dacab76bc369f67c31f24b95c8431bfbd869f4048d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/noble/post-quantum@0.2.1",
+      "name": "@noble/post-quantum",
+      "version": "0.2.1",
+      "purl": "pkg:npm/%40noble%2Fpost-quantum@0.2.1",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "22681f329f67a2d5d2128733e3ae28d4079f61f15612492ccca3063be6624e7ef7c8804578dc841ca414312f9285e27048dca695d4adb3a63255c4038dc9d556"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/noble/post-quantum/node_modules/@noble/hashes@1.6.0",
+      "name": "@noble/post-quantum/node_modules/@noble/hashes",
+      "version": "1.6.0",
+      "purl": "pkg:npm/%40noble%2Fpost-quantum%2Fnode_modules%2F%40noble%2Fhashes@1.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "61450b7f4524e3f98003cf70fa4dfec94621e8dac4bf165ae53e92637c2532f1367211e4c4551420323cfd75b54120b7e7b880e694a7aaded7121bc53aa983c9"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:npm/quxtech/pqc-crypto@2.0.0",
+      "dependsOn": [
+        "pkg:npm/noble/ciphers@1.2.1",
+        "pkg:npm/noble/curves@1.8.1",
+        "pkg:npm/noble/hashes@1.7.1",
+        "pkg:npm/noble/post-quantum@0.2.1"
+      ]
+    }
+  ]
+}

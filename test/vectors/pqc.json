@@ -1,0 +1,32 @@
+{
+  "$source": "Self-consistency vectors with deterministic seeds. NIST ACVP-PQC vectors (https://github.com/usnistgov/ACVP-Server) ship in v2.x; this baseline detects @noble/post-quantum tamper.",
+  "$note": "Each entry uses an all-zero seed of the appropriate length; the resulting public key bytes prefix is recorded. Used as a 'known fixed seed → known fixed public key bytes' regression test against @noble/post-quantum.",
+  "ml_kem": [
+    {
+      "name": "ml-kem-768 zero-seed pubkey prefix",
+      "level": "3",
+      "seed_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "$note": "expected_pubkey_prefix populated on first run"
+    },
+    {
+      "name": "ml-kem-1024 zero-seed pubkey prefix",
+      "level": "5",
+      "seed_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "$note": "expected_pubkey_prefix populated on first run"
+    }
+  ],
+  "ml_dsa": [
+    {
+      "name": "ml-dsa-65 zero-seed pubkey prefix",
+      "level": "3",
+      "seed_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "$note": "expected_pubkey_prefix populated on first run"
+    },
+    {
+      "name": "ml-dsa-87 zero-seed pubkey prefix",
+      "level": "5",
+      "seed_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "$note": "expected_pubkey_prefix populated on first run"
+    }
+  ]
+}

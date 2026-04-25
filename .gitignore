@@ -1,3 +1,4 @@
 node_modules/
 *.tgz
 .npmrc
+.release-signing-key.hex

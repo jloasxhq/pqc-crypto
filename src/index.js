@@ -1,43 +1,25 @@
 /**
  * @quxtech/pqc-crypto - Post-Quantum Cryptography Library (v2.0)
  * ============================================================================
- * A modular post-quantum cryptography library implementing:
- * - NIST FIPS 203 ML-KEM (CRYSTALS-Kyber) for key encapsulation
- * - NIST FIPS 204 ML-DSA (CRYSTALS-Dilithium) for digital signatures
- * - NIST FIPS 202 SHA-3 for hashing
- * - NIST SP 800-132 PBKDF2-HMAC-SHA-256 for passphrase-derived key wrapping
- * - AES-256-GCM for symmetric encryption
- *
- * IMPORTANT: This library is NOT FIPS 140-3 validated. Algorithm
- * implementations come from the @noble/* pure-JS family (audited by
- * Cure53). For an actual FIPS-validated deployment, future major versions
- * will introduce a PqcProvider abstraction that delegates approved-mode
- * operations to a validated backend (OpenSSL FIPS, BoringCrypto, PKCS#11).
- * See SECURITY.md and the v2.0 release notes for details.
- *
- * v2.0 highlights:
- * - Opt-in setFipsMode() with power-on self-tests + non-approved algorithm
- *   gating (Keccak)
- * - Pair-wise consistency on every keygen
- * - PBKDF2-HMAC-SHA-256 (FIPS-approved) for serialized key envelopes,
- *   replacing v1's HKDF passphrase wrap. v1 envelopes remain readable.
- * - Documented memory hygiene + best-effort zeroization helpers
+ * NOT FIPS 140-3 validated. FIPS-aligned with opt-in approved-mode gating
+ * and a PqcProvider abstraction for future delegation to validated backends.
+ * See SECURITY.md for the full validation-status statement.
  * ============================================================================
  */
 
-// Core modules
+// Core
 export * as kem from './core/kem.js';
 export * as dsa from './core/dsa.js';
 export * as symmetric from './core/symmetric.js';
 export * as keys from './core/keys.js';
 export * as session from './core/session.js';
 export * as voip from './core/voip.js';
-
-// FIPS mode + self-tests (v2.0)
+export * as hybrid from './core/hybrid.js';
 export * as fips from './core/fips.js';
 export * as selftest from './core/selftest.js';
+export * as provider from './core/provider.js';
 
-// Utility modules
+// Utility
 export * as hash from './utils/hash.js';
 export * as zeroize from './utils/zeroize.js';
 
@@ -47,14 +29,21 @@ import * as symmetricModule from './core/symmetric.js';
 import * as keysModule from './core/keys.js';
 import * as sessionModule from './core/session.js';
 import * as voipModule from './core/voip.js';
-import * as hashModule from './utils/hash.js';
+import * as hybridModule from './core/hybrid.js';
 import * as fipsModule from './core/fips.js';
 import * as selftestModule from './core/selftest.js';
+import * as providerModule from './core/provider.js';
+import * as hashModule from './utils/hash.js';
 import * as zeroizeModule from './utils/zeroize.js';
+
+// Wire provider-change hook into fips.js so that swapping the provider
+// resets the self-test gate (matches FIPS 140-3 module-state semantics).
+providerModule._onProviderChange(() => fipsModule._onProviderReset());
 
 // Top-level convenience re-exports
 export const { setFipsMode, isFipsMode } = fipsModule;
 export const { runSelfTests } = selftestModule;
+export const { setProvider, getProvider } = providerModule;
 
 export function generateKeyPairs(securityLevel = '5') {
     return {
@@ -90,8 +79,7 @@ export function encryptAndSign(data, recipientKemPublicKey, senderDsaSecretKey, 
 
 export function verifyAndDecrypt(payload, senderDsaPublicKey, recipientKemSecretKey, securityLevel = '5') {
     const signatureData = `${payload.encryptedData.nonce}:${payload.encryptedData.ciphertext}:${payload.kemCiphertext}`;
-    const valid = dsaModule.verify(signatureData, payload.signature, senderDsaPublicKey, securityLevel);
-    if (!valid) {
+    if (!dsaModule.verify(signatureData, payload.signature, senderDsaPublicKey, securityLevel)) {
         throw new Error('Signature verification failed');
     }
     const sharedSecret = kemModule.decapsulate(payload.kemCiphertext, recipientKemSecretKey, securityLevel);
@@ -99,23 +87,28 @@ export function verifyAndDecrypt(payload, senderDsaPublicKey, recipientKemSecret
 }
 
 export function getAlgorithmInfo(securityLevel = '5') {
+    const p = providerModule.getProvider();
     return {
         kem: kemModule.getAlgorithmName(securityLevel),
         dsa: dsaModule.getAlgorithmName(securityLevel),
         symmetric: 'AES-256-GCM',
         hash: 'SHA3-256/512',
         kdf: 'PBKDF2-HMAC-SHA-256 (passphrase wrap), HKDF-SHA3-256 (KEM secret)',
+        hybridSuites: [
+            'X25519+ML-KEM-768', 'X25519+ML-KEM-1024',
+            'P-384+ML-KEM-768', 'P-384+ML-KEM-1024',
+        ],
         securityLevel,
-        nistFips: ['FIPS 203', 'FIPS 204', 'FIPS 202', 'SP 800-132'],
+        nistFips: ['FIPS 203', 'FIPS 204', 'FIPS 202', 'SP 800-132', 'SP 800-56C Rev 2'],
         library: '@quxtech/pqc-crypto@2.0.0',
-        fipsValidated: false,
+        fipsValidated: p.isFipsValidated,
+        fipsCertNumber: p.fipsCertNumber || null,
         fipsModeEnabled: fipsModule.isFipsMode(),
+        provider: p.name,
     };
 }
 
-export function computeHash(data) {
-    return hashModule.sha3256(data);
-}
+export function computeHash(data) { return hashModule.sha3256(data); }
 
 export default {
     kem: kemModule.default,
@@ -124,13 +117,17 @@ export default {
     keys: keysModule.default,
     session: sessionModule.default,
     voip: voipModule.default,
+    hybrid: hybridModule.default,
     hash: hashModule.default,
     fips: fipsModule.default,
     selftest: selftestModule.default,
+    provider: providerModule.default,
     zeroize: zeroizeModule.default,
     setFipsMode: fipsModule.setFipsMode,
     isFipsMode: fipsModule.isFipsMode,
     runSelfTests: selftestModule.runSelfTests,
+    setProvider: providerModule.setProvider,
+    getProvider: providerModule.getProvider,
     generateKeyPairs,
     quickEncapsulate,
     quickDecapsulate,

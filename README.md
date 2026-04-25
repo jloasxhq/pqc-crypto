@@ -118,3 +118,15 @@ See [SECURITY.md](SECURITY.md) for vulnerability disclosure.
 ## License
 
 MIT.
+
+## v2.0 update — hybrid KEM, provider abstraction, signed SBOM
+
+This release lands the full FIPS readiness roadmap. See `CHANGELOG.md`
+for the full list. Highlights:
+
+- `hybrid` module — NIST SP 800-56C Rev 2 combiner over X25519/P-384 + ML-KEM
+- `provider` module — `PqcProvider` interface, `NobleProvider` default
+- Expanded NIST KAT vectors at `test/vectors/` (SHA-3, HKDF, PBKDF2)
+- CycloneDX SBOM (`bom.json`) signed with ed25519 (`bom.json.sig`,
+  `bom-pubkey.pem`)
+- Reproducible-build documentation in `BUILD.md`

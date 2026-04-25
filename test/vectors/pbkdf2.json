@@ -1,0 +1,22 @@
+{
+  "$source": "RFC 6070 — PKCS #5: PBKDF2 Test Vectors (Josefsson, 2011)",
+  "$note": "RFC 6070 specifies vectors over HMAC-SHA-1; @quxtech/pqc-crypto uses HMAC-SHA-256 per NIST SP 800-132. We include RFC 7914 §11 PBKDF2-HMAC-SHA-256 vectors instead.",
+  "pbkdf2_hmac_sha256": [
+    {
+      "name": "RFC 7914 §11 #1",
+      "passphrase_utf8": "passwd",
+      "salt_utf8": "salt",
+      "iterations": 1,
+      "length": 64,
+      "expected_hex": "55ac046e56e3089fec1691c22544b605f94185216dde0465e68b9d57c20dacbc49ca9cccf179b645991664b39d77ef317c71b845b1e30bd509112041d3a19783"
+    },
+    {
+      "name": "RFC 7914 §11 #2",
+      "passphrase_utf8": "Password",
+      "salt_utf8": "NaCl",
+      "iterations": 80000,
+      "length": 64,
+      "expected_hex": "4ddcd8f60b98be21830cee5ef22701f9641a4418d04c0414aeff08876b34ab56a1d425a1225833549adb841b51c9b3176a272bdebba1d078478f62b397f33c8d"
+    }
+  ]
+}

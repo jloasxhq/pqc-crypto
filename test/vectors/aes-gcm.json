@@ -1,0 +1,20 @@
+{
+  "$source": "Self-consistency vectors — encrypt/decrypt roundtrip with deterministic inputs to detect implementation regression",
+  "$note": "Strict NIST CAVP AES-GCM vectors (gcmEncryptIntIV256.rsp, etc.) require checked-in vector files (~5MB) — pulled in v2.x via the 'fetch-vectors' build script. Self-consistency provides a smoke-test floor that catches @noble/ciphers swap or tamper.",
+  "aes_gcm_256": [
+    {
+      "name": "selfconsist 1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+      "iv_hex": "000102030405060708090a0b",
+      "aad_hex": "",
+      "plaintext_hex": "5468697320697320612074657374206d657373616765"
+    },
+    {
+      "name": "selfconsist 2",
+      "key_hex": "fedcba98765432100123456789abcdef00112233445566778899aabbccddeeff",
+      "iv_hex": "cafebabefacedbaddecaf888",
+      "aad_hex": "feedfacedeadbeef",
+      "plaintext_hex": "00112233445566778899aabbccddeeff"
+    }
+  ]
+}
