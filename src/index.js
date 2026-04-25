@@ -22,6 +22,7 @@ export * as provider from './core/provider.js';
 // Utility
 export * as hash from './utils/hash.js';
 export * as zeroize from './utils/zeroize.js';
+export * as metrics from './utils/metrics.js';
 
 import * as kemModule from './core/kem.js';
 import * as dsaModule from './core/dsa.js';
@@ -35,6 +36,7 @@ import * as selftestModule from './core/selftest.js';
 import * as providerModule from './core/provider.js';
 import * as hashModule from './utils/hash.js';
 import * as zeroizeModule from './utils/zeroize.js';
+import * as metricsModule from './utils/metrics.js';
 
 // Wire provider-change hook into fips.js so that swapping the provider
 // resets the self-test gate (matches FIPS 140-3 module-state semantics).
@@ -44,6 +46,7 @@ providerModule._onProviderChange(() => fipsModule._onProviderReset());
 export const { setFipsMode, isFipsMode } = fipsModule;
 export const { runSelfTests } = selftestModule;
 export const { setProvider, getProvider } = providerModule;
+export const { initMetrics, metricsHandler } = metricsModule;
 
 export function generateKeyPairs(securityLevel = '5') {
     return {
@@ -123,11 +126,14 @@ export default {
     selftest: selftestModule.default,
     provider: providerModule.default,
     zeroize: zeroizeModule.default,
+    metrics: metricsModule.default,
     setFipsMode: fipsModule.setFipsMode,
     isFipsMode: fipsModule.isFipsMode,
     runSelfTests: selftestModule.runSelfTests,
     setProvider: providerModule.setProvider,
     getProvider: providerModule.getProvider,
+    initMetrics: metricsModule.initMetrics,
+    metricsHandler: metricsModule.metricsHandler,
     generateKeyPairs,
     quickEncapsulate,
     quickDecapsulate,

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:d6258e32-6791-4472-93ca-fdd4b21429b2",
+  "serialNumber": "urn:uuid:ae20edfb-ce4a-41a0-b0f9-5c693541da3b",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-25T00:04:48.615Z",
+    "timestamp": "2026-04-25T02:03:34.497Z",
     "tools": [
       {
         "vendor": "QUX Technologies",
@@ -14,10 +14,10 @@
     ],
     "component": {
       "type": "library",
-      "bom-ref": "pkg:npm/quxtech/pqc-crypto@2.0.0",
+      "bom-ref": "pkg:npm/quxtech/pqc-crypto@2.0.1",
       "name": "@quxtech/pqc-crypto",
-      "version": "2.0.0",
-      "description": "Post-Quantum Cryptography library implementing CRYSTALS-Kyber (ML-KEM) and CRYSTALS-Dilithium (ML-DSA) with hybrid KEM, pluggable PqcProvider, opt-in FIPS-mode self-tests, NIST KAT vectors, and signed SBOM",
+      "version": "2.0.1",
+      "description": "Post-Quantum Cryptography library implementing CRYSTALS-Kyber (ML-KEM) and CRYSTALS-Dilithium (ML-DSA) with hybrid KEM, pluggable PqcProvider, opt-in FIPS-mode self-tests, NIST KAT vectors, signed SBOM, and optional Prometheus metrics adapter",
       "licenses": [
         {
           "license": {
@@ -25,7 +25,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40quxtech%2Fpqc-crypto@2.0.0"
+      "purl": "pkg:npm/%40quxtech%2Fpqc-crypto@2.0.1"
     },
     "properties": [
       {
@@ -146,7 +146,7 @@
   ],
   "dependencies": [
     {
-      "ref": "pkg:npm/quxtech/pqc-crypto@2.0.0",
+      "ref": "pkg:npm/quxtech/pqc-crypto@2.0.1",
       "dependsOn": [
         "pkg:npm/noble/ciphers@1.2.1",
         "pkg:npm/noble/curves@1.8.1",

@@ -112,3 +112,14 @@ For an auditor, content reproducibility (every committed file's SHA-256
 matches) plus signature verification (SBOM signature checks) is
 sufficient. Bit-identical tarball reproducibility is on the v2.x
 roadmap.
+
+## Subpath exports (v2.0.1)
+
+v2.0.1 adds the `./metrics` subpath export pointing at
+`src/utils/metrics.js` (Prometheus adapter). The export is wired into
+`package.json` `exports`, with `prom-client` declared as an OPTIONAL
+peer dependency via `peerDependenciesMeta`; consumers do not pull
+`prom-client` transitively. The adapter source is re-exported
+verbatim through `src/index.js` (`metrics` namespace + top-level
+`initMetrics` / `metricsHandler`).
+

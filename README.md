@@ -130,3 +130,37 @@ for the full list. Highlights:
 - CycloneDX SBOM (`bom.json`) signed with ed25519 (`bom.json.sig`,
   `bom-pubkey.pem`)
 - Reproducible-build documentation in `BUILD.md`
+
+## Optional: Prometheus metrics adapter (v2.0.1+)
+
+`@quxtech/pqc-crypto/metrics` is a drop-in observability layer that wraps
+the public `kem`, `dsa`, `hybrid`, and `session` calls and emits
+Prometheus counters / histograms. It depends on `prom-client` as an
+**optional** peer dependency: if `prom-client` is not installed in the
+host application, the adapter no-ops and forwards every call unwrapped
+(zero overhead, zero crash).
+
+```js
+import {
+  initMetrics, metricsHandler, kem, dsa, hybrid, session, register,
+} from '@quxtech/pqc-crypto/metrics';
+
+await initMetrics({ vm: process.env.HOSTNAME, app: 'quxpay-middleware' });
+
+// ... use kem / dsa / hybrid / session exactly like the root package ...
+
+// Express / Node http: expose /metrics
+app.get('/metrics', metricsHandler);
+```
+
+Counters (label set `vm`, `app`, `suite`): `pqc_handshakes_total`,
+`pqc_handshake_errors_total`, `pqc_signs_total`, `pqc_sign_errors_total`,
+`pqc_verifies_total`, `pqc_verify_failures_total`,
+`pqc_selftest_failures_total`. Gauge: `pqc_session_count`. Histograms
+(ms): `pqc_handshake_duration_ms`, `pqc_sign_duration_ms`,
+`pqc_verify_duration_ms`.
+
+To enable: `npm install prom-client@^14`. The pqc-crypto package itself
+will not pull `prom-client` into your dependency tree; you must add it
+explicitly.
+

@@ -1,7 +1,7 @@
 {
   "name": "@quxtech/pqc-crypto",
-  "version": "2.0.0",
-  "description": "Post-Quantum Cryptography library implementing CRYSTALS-Kyber (ML-KEM) and CRYSTALS-Dilithium (ML-DSA) with hybrid KEM, pluggable PqcProvider, opt-in FIPS-mode self-tests, NIST KAT vectors, and signed SBOM",
+  "version": "2.0.1",
+  "description": "Post-Quantum Cryptography library implementing CRYSTALS-Kyber (ML-KEM) and CRYSTALS-Dilithium (ML-DSA) with hybrid KEM, pluggable PqcProvider, opt-in FIPS-mode self-tests, NIST KAT vectors, signed SBOM, and optional Prometheus metrics adapter",
   "type": "module",
   "main": "src/index.js",
   "module": "src/index.js",
@@ -44,6 +44,9 @@
     },
     "./zeroize": {
       "import": "./src/utils/zeroize.js"
+    },
+    "./metrics": {
+      "import": "./src/utils/metrics.js"
     }
   },
   "files": [
@@ -95,5 +98,13 @@
     "@noble/hashes": "1.7.1",
     "@noble/post-quantum": "0.2.1",
     "@noble/curves": "1.8.1"
+  },
+  "peerDependencies": {
+    "prom-client": ">=14.0.0"
+  },
+  "peerDependenciesMeta": {
+    "prom-client": {
+      "optional": true
+    }
   }
 }

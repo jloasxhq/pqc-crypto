@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.0.1 (2026-04-24)
+
+Patch release: optional Prometheus metrics adapter.
+
+### New features
+
+#### Prometheus metrics adapter (`metrics` module, `./metrics` export)
+
+Drop-in observability layer that wraps the public `kem`, `dsa`,
+`hybrid`, and `session` calls and emits Prometheus counters/histograms.
+
+- New entry point: `import { initMetrics, metricsHandler, kem, dsa,
+  hybrid, session, register } from '@quxtech/pqc-crypto/metrics';`.
+- Counters: `pqc_handshakes_total`, `pqc_handshake_errors_total`,
+  `pqc_signs_total`, `pqc_sign_errors_total`, `pqc_verifies_total`,
+  `pqc_verify_failures_total`, `pqc_selftest_failures_total`. Gauge:
+  `pqc_session_count`. Histograms (ms):
+  `pqc_handshake_duration_ms`, `pqc_sign_duration_ms`,
+  `pqc_verify_duration_ms`. Label set: `vm`, `app`, `suite`.
+- `prom-client` is declared as an OPTIONAL `peerDependency`. If absent
+  the adapter no-ops gracefully (zero overhead, zero crash) and
+  forwards every call to the underlying primitive unwrapped.
+- `register` is exported as a Proxy onto the active prom-client
+  Registry so consumers can attach to their own `/metrics` endpoint.
+- Top-level helpers `initMetrics` and `metricsHandler` are also
+  re-exported from the package root for convenience.
+
+### No breaking changes
+
+All v2.0.0 APIs are unchanged. `@noble/*` dependency versions are
+unchanged. Existing consumers that do not import `./metrics` see no
+behavioral difference.
+
 ## 2.0.0 (2026-04-24)
 
 This is a major release that lands the full FIPS 140-3 readiness
