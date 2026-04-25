@@ -6,19 +6,45 @@
   "main": "src/index.js",
   "module": "src/index.js",
   "exports": {
-    ".":          { "import": "./src/index.js" },
-    "./kem":      { "import": "./src/core/kem.js" },
-    "./dsa":      { "import": "./src/core/dsa.js" },
-    "./hybrid":   { "import": "./src/core/hybrid.js" },
-    "./symmetric":{ "import": "./src/core/symmetric.js" },
-    "./keys":     { "import": "./src/core/keys.js" },
-    "./session":  { "import": "./src/core/session.js" },
-    "./voip":     { "import": "./src/core/voip.js" },
-    "./hash":     { "import": "./src/utils/hash.js" },
-    "./fips":     { "import": "./src/core/fips.js" },
-    "./provider": { "import": "./src/core/provider.js" },
-    "./selftest": { "import": "./src/core/selftest.js" },
-    "./zeroize":  { "import": "./src/utils/zeroize.js" }
+    ".": {
+      "import": "./src/index.js"
+    },
+    "./kem": {
+      "import": "./src/core/kem.js"
+    },
+    "./dsa": {
+      "import": "./src/core/dsa.js"
+    },
+    "./hybrid": {
+      "import": "./src/core/hybrid.js"
+    },
+    "./symmetric": {
+      "import": "./src/core/symmetric.js"
+    },
+    "./keys": {
+      "import": "./src/core/keys.js"
+    },
+    "./session": {
+      "import": "./src/core/session.js"
+    },
+    "./voip": {
+      "import": "./src/core/voip.js"
+    },
+    "./hash": {
+      "import": "./src/utils/hash.js"
+    },
+    "./fips": {
+      "import": "./src/core/fips.js"
+    },
+    "./provider": {
+      "import": "./src/core/provider.js"
+    },
+    "./selftest": {
+      "import": "./src/core/selftest.js"
+    },
+    "./zeroize": {
+      "import": "./src/utils/zeroize.js"
+    }
   },
   "files": [
     "src",
@@ -55,12 +81,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+http://10.10.0.10:3000/quxadmin/pqc-crypto.git"
+    "url": "git+https://git.qux.local:11300/quxadmin/pqc-crypto.git"
   },
   "bugs": {
-    "url": "http://10.10.0.10:3000/quxadmin/pqc-crypto/issues"
+    "url": "https://git.qux.local:11300/quxadmin/pqc-crypto/issues"
   },
-  "homepage": "http://10.10.0.10:3000/quxadmin/pqc-crypto",
+  "homepage": "https://git.qux.local:11300/quxadmin/pqc-crypto",
   "engines": {
     "node": ">=20.0.0"
   },
